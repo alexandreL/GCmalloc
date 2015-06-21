@@ -6,7 +6,7 @@
 /*   By: alex <alexandre.loubeyres@gmail.com>           /       \             */
 /*                                                     /         \       ^    */
 /*   Created: 2015/06/18 15:30:16 by alex             |           |     //    */
-/*   Updated: 2015/06/18 15:53:47 by alex              \         /    //      */
+/*   Updated: 2015/06/21 17:43:48 by alex              \         /    //      */
 /*                                                      ///  ///   --         */
 /*                                                                            */
 /* ************************************************************************** */
@@ -21,6 +21,9 @@ typedef struct	s_gc_m
   int		size;
   struct s_gc_m	*prev;
   struct s_gc_m	*next;  
-}		t_gc_m
+}		t_gc_m;
+
+t_gc_m	*get_struct_start_malloc();
+t_gc_m	*get_struct_last_malloc(t_gc_m *prev);
 
 #endif /* GC_MALLOC_H_ */
