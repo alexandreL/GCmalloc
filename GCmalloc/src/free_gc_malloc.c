@@ -32,6 +32,7 @@ void		free_exept_obj(void *obj)
       if (list != get_struct_start_malloc())
 	free(list);
     }
+  get_struct_last_malloc(get_struct_start_malloc());
 }
 
 void		free_by_id(int id)
@@ -56,6 +57,7 @@ void		free_by_id(int id)
 	    free(del);
 	}
     }
+  get_struct_last_malloc(get_struct_start_malloc());
 }
 
 void		free_me_all()
