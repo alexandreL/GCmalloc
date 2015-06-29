@@ -14,26 +14,6 @@
 #include "gc_malloc.h"
 #include <stdlib.h>
 
-t_gc_m		*get_struct_start_malloc()
-{
-  static t_gc_m	obj = {NULL, 0, 0, NULL, NULL};
-
-  return (&obj);
-}
-
-t_gc_m		*get_struct_last_malloc(t_gc_m *prev)
-{
-  static t_gc_m	*obj = NULL;
-
-  if (prev != NULL)
-    {
-      obj = prev;
-      while (obj->next)
-	obj = obj->next;
-    }
-  return (obj);
-}
-
 void		*get_new_obj(int size, int id)
 {
   t_gc_m	*list;
@@ -94,4 +74,21 @@ void		*get_new_obj_set(int size, int id)
   while (++i < size)
     ((char *)(obj))[i] = 0;  
   return (obj);
+}
+
+void		obj_mem_set(void *obj)
+{
+  int		i;
+  int		size;
+  t_gc_m	*list;
+
+  i = -1;
+  list = get_struct_start_malloc();
+  while (list && list->data != obj)
+    list = list->next;
+  if (list == NULL)
+    return;
+  size = list->size;
+  while (++i < size)
+    ((char *)(obj))[i] = 0;  
 }

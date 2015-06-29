@@ -17,6 +17,7 @@ CC 	= gcc
 
 SRC 	= src/creat_gc_malloc.c \
 	  src/free_gc_malloc.c \
+	  src/get_gc_malloc.c \
 
 OBJ 	= $(SRC:.c=.o)
 

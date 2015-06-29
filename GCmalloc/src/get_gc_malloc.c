@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                      /\ ___ /\             */
-/*   gcm.h                                             (  o   o  )            */
+/*   get_gc_malloc.c                                   (  o   o  )            */
 /*                                                      \  >#<  /             */
 /*   By: alex <alexandre.loubeyres@gmail.com>           /       \             */
 /*                                                     /         \       ^    */
-/*   Created: 2015/06/21 17:42:52 by alex             |           |     //    */
-/*   Updated: 2015/06/21 17:43:58 by alex              \         /    //      */
+/*   Created: 2015/06/29 19:27:39 by alex             |           |     //    */
+/*   Updated: 2015/06/29 19:28:10 by alex              \         /    //      */
 /*                                                      ///  ///   --         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GCM_H_
-# define GCM_H_
+#include "gc_malloc.h"
+#include <stdlib.h>
 
-void	*get_new_obj(int size, int id);
-void	*resize_obj(void *oldobj, int new_size);
-void	*get_new_obj_set(int size, int id);
-void    obj_mem_set(void *obj);
+t_gc_m		*get_struct_start_malloc()
+{
+  static t_gc_m	obj = {NULL, 0, 0, NULL, NULL};
 
-void	free_exept_obj(void *obj);
-void	free_by_id(int id);
-void	free_me_all();
+  return (&obj);
+}
 
-#endif /* !GCM_H_ */
+t_gc_m		*get_struct_last_malloc(t_gc_m *prev)
+{
+  static t_gc_m	*obj = NULL;
+
+  if (prev != NULL)
+    {
+      obj = prev;
+      while (obj->next)
+	obj = obj->next;
+    }
+  return (obj);
+}
