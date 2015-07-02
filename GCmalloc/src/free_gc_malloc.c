@@ -6,7 +6,7 @@
 /*   By: alex <alexandre.loubeyres@gmail.com>           /       \             */
 /*                                                     /         \       ^    */
 /*   Created: 2015/06/21 02:05:53 by alex             |           |     //    */
-/*   Updated: 2015/06/29 19:27:57 by alex              \         /    //      */
+/*   Updated: 2015/07/02 12:00:39 by alex              \         /    //      */
 /*                                                      ///  ///   --         */
 /*                                                                            */
 /* ************************************************************************** */
@@ -70,7 +70,32 @@ void		free_me_all()
     {
       del = list;
       list = list->next;
-      free(del->data);
+      if (del->data)
+	free(del->data);
+      del->data = NULL;
+      if (del != get_struct_start_malloc())
+	free(del);
+    }
+}
+
+void		free_me_all_secure()
+{
+  t_gc_m	*list;
+  t_gc_m	*del;
+  int		pos;
+
+  list = get_struct_start_malloc();
+  while (list)
+    {
+      pos = 0;
+      del = list;
+      list = list->next;
+      if (del->data)
+	{
+	  while (pos < del->size)
+	    ((char *)(del->data))[pos++] = 0;
+	  free(del->data);
+	}
       del->data = NULL;
       if (del != get_struct_start_malloc())
 	free(del);
